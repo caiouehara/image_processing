@@ -1,4 +1,3 @@
-
 public class PointwiseTransform extends Object {
 
 	/**
@@ -27,8 +26,16 @@ public class PointwiseTransform extends Object {
 		double max = input.getMaximum();
 		double min = input.getMinimum();
 		ImageAccess output = new ImageAccess(nx, ny);
-		// Add your code here
-		return output;	
+		double alpha = 255.0 / (max - min);
+		double beta = min;
+		for (int y = 0; y < ny; y++) {
+			for (int x = 0; x < nx; x++) {
+				double fxy = input.getPixel(x, y);
+				double gxy = alpha * (fxy - beta);
+				output.putPixel(x, y, gxy);
+			}
+		}
+		return output;
 	}
 
 	/**

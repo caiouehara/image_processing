@@ -4,11 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bec53837-6e65-40b2-84c1-953fed78105f" name="Changes" comment="" />
+    <list default="true" id="bec53837-6e65-40b2-84c1-953fed78105f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/pointwise/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/pointwise/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/pointwise/PointwiseTransform.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/pointwise/PointwiseTransform.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PointwiseTransform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PointwiseTransform.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
@@ -24,6 +34,8 @@
     "Application.main.executor": "Run",
     "Application.src.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/caiomartins/usp/image_processing/pointwise/lib/ij.jar",
     "node.js.detected.package.eslint": "true",
@@ -34,7 +46,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "configurable.group.appearance",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -82,7 +94,8 @@
       <workItem from="1741357217782" duration="1062000" />
       <workItem from="1741358287367" duration="463000" />
       <workItem from="1741362577988" duration="1033000" />
-      <workItem from="1741363616683" duration="1567000" />
+      <workItem from="1741363616683" duration="2307000" />
+      <workItem from="1741650133935" duration="1845000" />
     </task>
     <servers />
   </component>

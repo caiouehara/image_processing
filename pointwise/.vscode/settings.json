@@ -1,6 +1,6 @@
 {
     "java.project.referencedLibraries": [
-      "lib/**/*.class",
-      "lib/mylib.jar"
+      "lib/internal/**/*.class",
+      "lib/ij.jar"
     ]
   }
