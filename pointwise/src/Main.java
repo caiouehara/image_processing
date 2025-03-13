@@ -8,7 +8,7 @@ public class Main {
         if (image != null) {
             ImageProcessor ip = image.getProcessor();
             ImageAccess ass = new ImageAccess(ip);
-            PointwiseTransform.inverse(ass);
+            PointwiseTransform.rescale(ass);
             image.show("");
             ass.show("");
         }
