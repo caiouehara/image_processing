@@ -1250,6 +1250,5 @@ public class ImageAccess {
 		for (int k=0; k<size; k++)
 			pixels[k] = doubleOperand1[k] / doubleOperand2[k];
 	}
-
 }
 
