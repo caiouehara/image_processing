@@ -78,7 +78,7 @@ public class FFT {
                 {
                     double r = real[y];
                     magnitude[y] = Math.sqrt(r * r + imaginary[y] * imaginary[y]);
-                    phase[y] = Math.atan2(magnitude[y], r);
+                    phase[y] = Math.atan2(imaginary[y], r);
                 } else
                 if(real[y] != 0.0D && imaginary[y] == 0.0D)
                 {
