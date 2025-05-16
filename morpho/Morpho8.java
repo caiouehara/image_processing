@@ -1,11 +1,56 @@
 import ij.*;
 
 public class Morpho8 {
-
 	public static void main(String[] args) {
-		
-		ImageAccess proc = Morpho8.doOpen(img);
+		Morpho8.do3_3();
+	}
+	public static void do3_3() {
+		new ImageJ();
+		String filename = "data/robot.tif";
+		ImagePlus imp = IJ.openImage(filename);
+		if (imp == null) {
+			System.out.println("Erro ao abrir a imagem: " + filename);
+		}
+		assert imp != null;
+		System.out.println("Processando imagem: " + filename);
+		ImageAccess image = new ImageAccess(imp.getProcessor());
+		ImageAccess proc = Morpho8.doGradient(image);
+		proc = Morpho8.doTopHatBright(proc);
+		proc = Morpho8.doClose(proc);
+		proc.show("Morpho8");
+
+	}
+	public static void do3_2() {
+		new ImageJ();
+		String filename = "data/spots.tif";
+		ImagePlus imp = IJ.openImage(filename);
+		if (imp == null) {
+			System.out.println("Erro ao abrir a imagem: " + filename);
+		}
+		assert imp != null;
+		System.out.println("Processando imagem: " + filename);
+		ImageAccess image = new ImageAccess(imp.getProcessor());
+		ImageAccess proc = Morpho8.doMedian(image);
+//		proc = Morpho8.doOpen(proc);
+		proc = Morpho8.doTopHatBright(proc);
+		proc = Morpho8.doClose(proc);
+		proc.show("Morpho8");
+	}
+	public static void do3_1(String[] args) {
+		new ImageJ();
+		String filename = "data/keyboard.tif";
+		ImagePlus imp = IJ.openImage(filename);
+		if (imp == null) {
+			System.out.println("Erro ao abrir a imagem: " + filename);
+		}
+		assert imp != null;
+		System.out.println("Processando imagem: " + filename);
+        ImageAccess image = new ImageAccess(imp.getProcessor());
+		ImageAccess proc = Morpho8.doOpen(image);
 		proc = Morpho8.doOpen(proc);        // repete para reforçar
+		proc = Morpho8.doOpen(proc);        // repete para reforçar
+		proc = Morpho8.doClose(proc);        // repete para reforçar
+		proc.show("Morpho8");
 	}
 
 	/**
