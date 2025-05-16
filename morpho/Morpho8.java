@@ -2,93 +2,121 @@ import ij.*;
 
 public class Morpho8 {
 
+	public static void main(String[] args) {
+		
+		ImageAccess proc = Morpho8.doOpen(img);
+		proc = Morpho8.doOpen(proc);        // repete para reforçar
+	}
+
 	/**
-	* Implements "dilation" method for 8-connected pixels of an ImageAccess object.
-	* For each pixel, the maximum value of the gray levels of its 3x3 local neighborhood
-	* which is 8-connected is found.
-	*
-	* @param img       	an ImageAccess object
-	*/
-	static public ImageAccess doDilation(ImageAccess img) {
+	 * Dilatação (8-conexa): para cada pixel retorna o maior valor do seu
+	 * vizinho 3×3.
+	 */
+	public static ImageAccess doDilation(ImageAccess img) {
 		int nx = img.getWidth();
 		int ny = img.getHeight();
 		ImageAccess out = new ImageAccess(nx, ny);
-		double arr[] = new double[9];
-		double max;
-		
-		for (int x=0; x<nx; x++) 
-		for (int y=0; y<ny; y++) {
-			img.getPattern(x, y, arr, ImageAccess.PATTERN_SQUARE_3x3);
-			max = arr[0];
-			for (int k=1; k<9; k++) {
-				if (arr[k] > max) {
-					max = arr[k];
-				}
+		double[] arr = new double[9];
+
+		for (int x = 0; x < nx; x++)
+			for (int y = 0; y < ny; y++) {
+				img.getPattern(x, y, arr, ImageAccess.PATTERN_SQUARE_3x3);
+				double max = arr[0];
+				for (int k = 1; k < 9; k++)
+					if (arr[k] > max)
+						max = arr[k];
+				out.putPixel(x, y, max);
 			}
-			out.putPixel(x, y, max);
-		}
 		return out;
 	}
 
-	static public ImageAccess doErosion(ImageAccess img) {
-		IJ.showMessage("Question");
-		return img;
+	/**
+	 * Erosão (8‑conexa): retorna o menor valor do bloco 3×3.
+	 */
+	public static ImageAccess doErosion(ImageAccess img) {
+		int nx = img.getWidth();
+		int ny = img.getHeight();
+		ImageAccess out = new ImageAccess(nx, ny);
+		double[] arr = new double[9];
+
+		for (int x = 0; x < nx; x++)
+			for (int y = 0; y < ny; y++) {
+				img.getPattern(x, y, arr, ImageAccess.PATTERN_SQUARE_3x3);
+				double min = arr[0];
+				for (int k = 1; k < 9; k++)
+					if (arr[k] < min)
+						min = arr[k];
+				out.putPixel(x, y, min);
+			}
+		return out;
 	}
 
-	static public ImageAccess doOpen(ImageAccess img) {
-		IJ.showMessage("Question");
-		return img;
+	/** Abertura = erosão seguida de dilatação. */
+	public static ImageAccess doOpen(ImageAccess img) {
+		return doDilation(doErosion(img));
 	}
 
-	static public ImageAccess doClose(ImageAccess img) {
-		IJ.showMessage("Question");
-		return img;
+	/** Fechamento = dilatação seguida de erosão. */
+	public static ImageAccess doClose(ImageAccess img) {
+		return doErosion(doDilation(img));
 	}
 
-	static public ImageAccess doGradient(ImageAccess img) {
-		IJ.showMessage("Question");
-		return img;
+	/** Gradiente morfológico = dilatada − erodida (contraste normalizado). */
+	public static ImageAccess doGradient(ImageAccess img) {
+		ImageAccess grad = doDilation(img);
+		grad.subtract(grad, doErosion(img));
+		grad.normalizeContrast();
+		return grad;
 	}
 
-	static public ImageAccess doTopHatBright(ImageAccess img) {
-		IJ.showMessage("Question");
-		return img;
+	/** Top‑Hat Bright = imagem − abertura. */
+	public static ImageAccess doTopHatBright(ImageAccess img) {
+		ImageAccess res = img.duplicate();
+		res.subtract(res, doOpen(img));
+		res.normalizeContrast();
+		return res;
 	}
 
-	static public ImageAccess doTopHatDark(ImageAccess img) {
-		IJ.showMessage("Question");
-		return img;
-	}
-
-	static public ImageAccess doMedian(ImageAccess img) {
-		IJ.showMessage("Question");
-		return img;
+	/** Top‑Hat Dark = fechamento − imagem. */
+	public static ImageAccess doTopHatDark(ImageAccess img) {
+		ImageAccess res = doClose(img);
+		res.subtract(res, img);
+		res.normalizeContrast();
+		return res;
 	}
 
 	/**
-	* Implements an algorithm for sorting arrays.
-	* Result is returned by the same array used as input.
-	*
-	* @param array       input and output array of the type double
-	*/
-	static private void sortArray(double array[]) {
+	 * Filtro Mediana 3×3: ordena o bloco 3×3 e devolve a mediana (posição 4).
+	 */
+	public static ImageAccess doMedian(ImageAccess img) {
+		int nx = img.getWidth();
+		int ny = img.getHeight();
+		ImageAccess out = new ImageAccess(nx, ny);
+		double[] arr = new double[9];
+
+		for (int x = 0; x < nx; x++)
+			for (int y = 0; y < ny; y++) {
+				img.getPattern(x, y, arr, ImageAccess.PATTERN_SQUARE_3x3);
+				sortArray(arr);
+				out.putPixel(x, y, arr[4]); // mediana (5.º elemento em array ordenado)
+			}
+		return out;
+	}
+
+	/** Selection‑sort simples para vetor de double (in‑place). */
+	private static void sortArray(double[] array) {
 		int len = array.length;
-		int l, k, lmin;
-		double permute, min;
-		
-		for (k = 0; k < len - 1; k++) {
-			min = array[k];
-			lmin = k;
-			for (l = k + 1; l < len; l++) {
-				if (array[l] < min) { 
+		for (int k = 0; k < len - 1; k++) {
+			double min = array[k];
+			int lmin = k;
+			for (int l = k + 1; l < len; l++)
+				if (array[l] < min) {
 					min = array[l];
 					lmin = l;
 				}
-			}
-			permute = array[lmin];
+			double tmp = array[lmin];
 			array[lmin] = array[k];
-			array[k] = permute;
+			array[k] = tmp;
 		}
 	}
-
 }

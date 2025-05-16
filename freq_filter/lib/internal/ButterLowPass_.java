@@ -105,9 +105,23 @@ class ButterRunner extends Thread {
 			radius=64;
 		if (command.equals("PI/2"))
 			radius=128;
-//
-//		design the filter here
-//
+
+		int width = im.getWidth();
+		int height = im.getHeight();
+		int centerX = width / 2;
+		int centerY = height / 2;
+
+		// Para cada pixel, calcula a distância ao centro e a função do filtro Butterworth
+		for (int y = 0; y < height; y++) {
+			int v = y - centerY;
+			for (int x = 0; x < width; x++) {
+				int u = x - centerX;
+				double D = Math.hypot(u, v);
+				double H = 1.0 / (1.0 + Math.pow(D / radius, 2 * n));
+				im.putPixel(x, y, H);
+			}
+		}
+
 		im.show("Low Pass "+command);
 	}
 }
